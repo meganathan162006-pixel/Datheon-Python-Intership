@@ -1,0 +1,33 @@
+DATHEON TASK 2 – CORE DAX MEASURES
+Create these measures after loading the cleaned CSV into Power BI.
+Assumed fact table name: FactOrders
+Assumed date dimension name: DimDate
+
+Total Sales = SUM(FactOrders[Sales])
+
+Total Profit = SUM(FactOrders[Profit])
+
+Total Orders = DISTINCTCOUNT(FactOrders[Order ID])
+
+Units Sold = SUM(FactOrders[Quantity])
+
+Profit Margin % = DIVIDE([Total Profit], [Total Sales], 0)
+
+Average Order Value = DIVIDE([Total Sales], [Total Orders], 0)
+
+Sales LY = CALCULATE([Total Sales], SAMEPERIODLASTYEAR(DimDate[Date]))
+
+YoY Sales Growth % = DIVIDE([Total Sales] - [Sales LY], [Sales LY], 0)
+
+POWER QUERY / MODEL NOTES
+1. Import Datheon_Task2_Superstore_Cleaned.csv.
+2. Rename the imported fact table to FactOrders.
+3. Create a date table:
+   DimDate = CALENDAR(MIN(FactOrders[Order Date]), MAX(FactOrders[Order Date]))
+4. Add Year = YEAR(DimDate[Date])
+5. Add Month Number = MONTH(DimDate[Date])
+6. Add Month Name = FORMAT(DimDate[Date], "MMM")
+7. Sort Month Name by Month Number.
+8. Relate DimDate[Date] (one) to FactOrders[Order Date] (many).
+9. Create dimension tables for Customer, Product and Geography using DISTINCT/Power Query reference queries.
+10. Build report pages as described in the executive PDF.
